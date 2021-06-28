@@ -1,0 +1,73 @@
+$fieldSize: 25;
+
+.main {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+
+    table, tr, td {
+        border: 1px solid darkgrey;
+        border-collapse: collapse;
+    }
+    td {
+        width: $fieldSize + px;
+        height: $fieldSize + px;
+        cursor: pointer;
+    }
+    
+    .water {
+        background-color: aqua;
+    }
+    .discovered {
+        background-color: gray;
+    }
+    .discovered.ship {
+        background-color: red;
+    }
+    .j1 {
+        display: flex;
+        gap: 10px;
+        
+        align-items: flex-start;
+        
+        
+        table {
+            height: $fieldSize * 10 + px;
+            
+            .ship {
+                background-color: green;
+            }
+
+            .discovered.ship {
+                background-color: red;
+            }
+        }
+        
+        .ships {
+            display: flex;
+            flex-direction: column;
+            
+            .ship {
+                display: flex;
+                p {
+                    background-color: lightgray;
+                    padding: 5px;
+                    cursor: pointer;
+                }
+                
+                p:hover {
+                    background-color: gray;
+                }
+                
+                .shipSelected {
+                    background-color: gray;
+                }
+            }
+            
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+    }
+}

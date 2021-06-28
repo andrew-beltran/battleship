@@ -1,0 +1,48 @@
+<div class="header">
+    <h1>Hundir la flota</h1>
+</div>
+<div class="main">
+    <div>
+        <h2>Tablero jugador</h2>
+        <div class="j1">
+            <div class="ships">
+                <div 
+                    class="ship" 
+                    *ngFor="let ship of ships; let index = index" 
+                    [ngClass]="{'hidden': playerBoard.ships?.includes(ship)}"
+                >
+                    <p (click)="changeDirectionShip(index)">↩</p>
+                    <p (click)="onSelectShip(index)" [ngClass]="{'shipSelected': shipSelected == index}">
+                        <span>dirección: {{ship.direction}}</span><br>
+                        <span>Tamaño: {{ship.size}}</span>
+                    </p>
+                </div>
+            </div>
+            <table>
+                <tr *ngFor="let row of playerBoard.board">
+                    <td 
+                        *ngFor="let column of row" 
+                        class="water"
+                        [ngClass]="{'discovered': column.discovered, 'ship': column.ship}" 
+                        (click)="onHandlePlayerField(column, playerBoard)">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div>
+        <h2>Tablero Máquina</h2>
+        <div class="j2">
+            <table>
+                <tr *ngFor="let row of machineBoard.board">
+                    <td 
+                        *ngFor="let column of row" 
+                        class="water"
+                        [ngClass]="{'discovered': column.discovered, 'ship': column.ship}" 
+                        (click)="onHandleMachineField(column, machineBoard)">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
