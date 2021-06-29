@@ -38,6 +38,9 @@ export class AppComponent implements OnInit {
       size: 2,
     },
   ]
+
+  totalVictory: number = 0;
+  gameEnd: boolean = false;
   
   
 
@@ -45,6 +48,7 @@ export class AppComponent implements OnInit {
     id: 'player',
     size: this.boardSize,
     board: [[]],
+    shipsDestroyed: 0,
 
     addShip: (position: PositionModel, ship: ShipModel) => {
 
@@ -61,11 +65,13 @@ export class AppComponent implements OnInit {
     id: 'machine',
     size: this.boardSize,
     board: [[]],
+    shipsDestroyed: 0,
 
     addShip: (position: PositionModel, ship: ShipModel) => {
 
       if (this.addShipOnBoard(this.machineBoard, position, ship)) {
-        !this.machineBoard.ships ? this.machineBoard.ships = [ship] : this.machineBoard.ships.push(ship);
+        !this.machineBoard.ships ? this.machineBoard.ships = [Object.assign({}, ship)] : this.machineBoard.ships.push(Object.assign({}, ship));
+        console.log(this.machineBoard.ships);
         return true;
       }
 
@@ -78,13 +84,19 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.initBoard(this.playerBoard);
     this.initBoard(this.machineBoard);
+
+    this.ships.forEach(ship => {
+      this.totalVictory += ship.size;
+    });
     
     for (let i = 0; i < this.ships.length; i++) {
       this.addShipOnRamdomPosition(this.machineBoard, this.ships[i]);
     }
     this.shipSelected = 0;
     console.log(this.machineBoard.ships);
+    console.log(this.totalVictory);
   }
+
 
   initBoard(board: BoardModel) {
     for (let x = 0; x < this.boardSize; x++) {
@@ -156,8 +168,11 @@ export class AppComponent implements OnInit {
     }
   }
   onHandleMachineField(field: FieldModel) {
-    if (this.playerBoard.ships?.length == this.ships.length && !field.discovered) {
+    if (this.playerBoard.ships?.length == this.ships.length && !field.discovered && !this.gameEnd) {
       field.setDiscovered();
+      if (field.ship) {
+        this.machineBoard.shipsDestroyed++;
+      };
 
       let position: PositionModel;
       do {
@@ -167,6 +182,15 @@ export class AppComponent implements OnInit {
         }
       } while (this.playerBoard.board[position.x][position.y].discovered);
       this.playerBoard.board[position.x][position.y].setDiscovered();
+      if (this.playerBoard.board[position.x][position.y].ship) {
+        this.playerBoard.shipsDestroyed++;
+      }
+      if (this.playerBoard.shipsDestroyed == this.totalVictory || this.machineBoard.shipsDestroyed == this.totalVictory) {
+        console.log('end');
+        console.log(this.playerBoard.shipsDestroyed || this.machineBoard.shipsDestroyed == this.totalVictory);
+        console.log(this.playerBoard.shipsDestroyed, this.machineBoard.shipsDestroyed, this.totalVictory);
+        this.gameEnd = true;
+      }
     }
   }
 

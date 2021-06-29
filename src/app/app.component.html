@@ -1,23 +1,20 @@
-<div class="header">
-    <h1>Hundir la flota</h1>
-</div>
 <div class="main">
+    <div class="ships">
+        <div 
+            class="ship" 
+            *ngFor="let ship of ships; let index = index" 
+            [ngClass]="{'hidden': playerBoard.ships?.includes(ship)}"
+        >
+            <p (click)="changeDirectionShip(index)">↩</p>
+            <p (click)="onSelectShip(index)" [ngClass]="{'shipSelected': shipSelected == index}">
+                <span>dirección: {{ship.direction}}</span><br>
+                <span>Tamaño: {{ship.size}}</span>
+            </p>
+        </div>
+    </div>
     <div>
         <h2>Tablero jugador</h2>
         <div class="j1">
-            <div class="ships">
-                <div 
-                    class="ship" 
-                    *ngFor="let ship of ships; let index = index" 
-                    [ngClass]="{'hidden': playerBoard.ships?.includes(ship)}"
-                >
-                    <p (click)="changeDirectionShip(index)">↩</p>
-                    <p (click)="onSelectShip(index)" [ngClass]="{'shipSelected': shipSelected == index}">
-                        <span>dirección: {{ship.direction}}</span><br>
-                        <span>Tamaño: {{ship.size}}</span>
-                    </p>
-                </div>
-            </div>
             <table>
                 <tr *ngFor="let row of playerBoard.board">
                     <td 
@@ -45,4 +42,8 @@
             </table>
         </div>
     </div>
+</div>
+<div class="end" *ngIf="gameEnd">
+    <span *ngIf="machineBoard.shipsDestroyed == totalVictory; else elseBlock">¡Has ganado!</span>
+    <ng-template #elseBlock>La máquina ha ganado</ng-template>
 </div>

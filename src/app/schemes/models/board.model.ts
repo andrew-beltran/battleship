@@ -7,6 +7,7 @@ export interface BoardModel {
     id: string,
     size: number,
     board: [FieldModel[]],
+    shipsDestroyed: number,
     ships?: [ShipModel],
 
     addShip(position: PositionModel, ship: ShipModel): boolean

@@ -4,6 +4,12 @@ $fieldSize: 25;
     display: flex;
     justify-content: center;
     gap: 20px;
+    font-family: sans-serif;
+    color: whitesmoke;
+
+    h2 {
+        text-align: center;
+    }
 
     table, tr, td {
         border: 1px solid darkgrey;
@@ -16,10 +22,10 @@ $fieldSize: 25;
     }
     
     .water {
-        background-color: aqua;
+        background-color: darkblue;
     }
     .discovered {
-        background-color: gray;
+        background-color: aqua;
     }
     .discovered.ship {
         background-color: red;
@@ -35,39 +41,50 @@ $fieldSize: 25;
             height: $fieldSize * 10 + px;
             
             .ship {
-                background-color: green;
+                background-color: gray;
             }
 
             .discovered.ship {
                 background-color: red;
             }
         }
+    }
+
+    .ships {
+        display: flex;
+        flex-direction: column;
         
-        .ships {
+        .ship {
             display: flex;
-            flex-direction: column;
-            
-            .ship {
-                display: flex;
-                p {
-                    background-color: lightgray;
-                    padding: 5px;
-                    cursor: pointer;
-                }
-                
-                p:hover {
-                    background-color: gray;
-                }
-                
-                .shipSelected {
-                    background-color: gray;
-                }
+            p {
+                background-color: gray;
+                padding: 5px;
+                cursor: pointer;
+            }
+            p:nth-of-type(2) {
+                width: 130px;
+                border-radius: 0 5px 5px 0;
             }
             
-        }
-        
-        .hidden {
-            display: none !important;
+            p:hover {
+                background-color: darkgray;
+            }
+            
+            .shipSelected {
+                background-color: darkgray      ;
+            }
         }
     }
+
+    .hidden {
+        display: none !important;
+    }
+
+}
+
+.end {
+    font-family: sans-serif;
+    color: whitesmoke;
+    text-align: center;
+    font-size: 30px;
 }
