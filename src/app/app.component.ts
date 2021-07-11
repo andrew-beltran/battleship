@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { BoardElementComponent } from './components/board-element/board-element.component';
 import { DirectionEnum } from './schemes/enums/direction.enum';
 import { BoardModel } from './schemes/models/board.model';
 import { FieldModel } from './schemes/models/field.model';
@@ -99,6 +98,9 @@ export class AppComponent implements OnInit {
 
 
   initBoard(board: BoardModel) {
+    board.board = [[]];
+    board.shipsDestroyed = 0;
+    board.ships = undefined;
     for (let x = 0; x < this.boardSize; x++) {
       board.board.push([])
       for (let y = 0; y < this.boardSize; y++) {
@@ -199,5 +201,15 @@ export class AppComponent implements OnInit {
   }
   onSelectShip(ship) {
     this.shipSelected = ship;
+  }
+
+  reset() {
+    this.initBoard(this.playerBoard);
+    this.initBoard(this.machineBoard);
+    this.gameEnd = false;
+
+    for (let i = 0; i < this.ships.length; i++) {
+      this.addShipOnRamdomPosition(this.machineBoard, this.ships[i]);
+    }
   }
 }

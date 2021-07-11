@@ -5,7 +5,7 @@
             *ngFor="let ship of ships; let index = index" 
             [ngClass]="{'hidden': playerBoard.ships?.includes(ship)}"
         >
-            <p (click)="changeDirectionShip(index)">↩</p>
+            <p (click)="changeDirectionShip(index)" (click)="onSelectShip(index)">↩</p>
             <p (click)="onSelectShip(index)" [ngClass]="{'shipSelected': shipSelected == index}">
                 <span>dirección: {{ship.direction}}</span><br>
                 <span>Tamaño: {{ship.size}}</span>
@@ -46,4 +46,5 @@
 <div class="end" *ngIf="gameEnd">
     <span *ngIf="machineBoard.shipsDestroyed == totalVictory; else elseBlock">¡Has ganado!</span>
     <ng-template #elseBlock>La máquina ha ganado</ng-template>
+    <button (click)="reset()">Volver a jugar</button>
 </div>
